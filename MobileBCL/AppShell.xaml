@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MobileBCL.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:MobileBCL.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    Title="MobileBCL">
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="Login" />
+    <ShellContent
+        Title="Forgot the password"
+        ContentTemplate="{DataTemplate views:ForgotPasswordPage}"
+        Route="ForgotPassword" />
+    <ShellContent
+        Title="Products"
+        ContentTemplate="{DataTemplate views:ProductPage}"
+        Route="Products" />
+    <ShellContent
+        Title="Register"
+        ContentTemplate="{DataTemplate views:RegisterPage}"
+        Route="Register" />
+
+</Shell>

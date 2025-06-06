@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MobileBCL.Views.LoginPage"
+             Title="LoginPage">
+    <Grid RowDefinitions="{OnIdiom Desktop='150,*', Tablet='450,*'}" BackgroundColor="#FFFFFF">
+        <Image Margin="0,50,0,0" Grid.Row="0" Source="logo.png" WidthRequest="150"/>
+        <Border BackgroundColor="#a4c2d6" StrokeThickness="3" Stroke="Black" Margin="40,40,40,160" Grid.Row="1">
+            <VerticalStackLayout Padding="50" Spacing="20">
+
+                <Border StrokeThickness="2" Stroke="Black" Margin="20">
+                    <Entry x:Name="email" Placeholder=" E-mail" FontAttributes="Bold" FontSize="24" TextColor="Black" BackgroundColor="White"/>
+                </Border>
+
+                <Border StrokeThickness="2" Stroke="Black" Margin="20">
+                    <Entry  x:Name="password" Placeholder=" Password" FontAttributes="Bold" FontSize="24" TextColor="Black" IsPassword="True" BackgroundColor="White"/>
+                </Border>
+                <HorizontalStackLayout Margin="0,30,0,0" Spacing="50" HorizontalOptions="Center">
+                    <Button Text="Create an account" FontAttributes="Bold" FontSize="20" TextColor="Black" WidthRequest="250" BackgroundColor="White" BorderColor="Black" BorderWidth="3" Clicked="OnClickToRegisterPage"/>
+                    <Button Text="Login" FontAttributes="Bold" FontSize="20" TextColor="Black" WidthRequest="200" BackgroundColor="White" BorderColor="Black" BorderWidth="3" Clicked="OnClickToProductsPage"/>
+                </HorizontalStackLayout>
+
+                <Label Text="Forgot the password?" x:Name="link" HorizontalOptions="Start" Margin="55,20,0,0" TextDecorations="Underline" FontAttributes="Bold" FontSize="20" TextColor="Blue">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer  Tapped="OnTapGoToForgotThePasswordPage"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>
