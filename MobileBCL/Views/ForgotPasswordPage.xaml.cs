@@ -13,7 +13,7 @@ public partial class ForgotPasswordPage : ContentPage
 	public ForgotPasswordPage()
 	{
 		InitializeComponent();
-		httpClient = new HttpClient() { BaseAddress = new Uri("http://192.168.35.111:5254/api/") };
+		httpClient = new HttpClient() { BaseAddress = new Uri("http://10.1.140.76:5254/api/") };
 		newUser = new User_Login();
 	}
 
@@ -93,10 +93,48 @@ public partial class ForgotPasswordPage : ContentPage
 				settingPassword.IsVisible = true;
 			}
 		}
+		else
+		{
+            await DisplayAlert("Empty field", "Answer field can't be empty", "Ok");
+        }
     }
 
-    private void OnClickToSavePassword(object sender, EventArgs e)
-    {
+	private void ClearFields()
+	{
+        email.Text = string.Empty;
+        question.Text = string.Empty;
+        answer.Text = string.Empty;
+        pswd.Text = string.Empty;
+        pswdConfirm.Text = string.Empty;
+    }
 
+    private async void OnClickToSavePassword(object sender, EventArgs e)
+    {
+		if (string.IsNullOrEmpty(pswd.Text) || string.IsNullOrEmpty(pswdConfirm.Text))
+		{
+			await DisplayAlert("Empty fields", "Password field can't be empty", "Ok");
+		}else if (!pswd.Text.Equals(pswdConfirm.Text)) 
+		{
+            await DisplayAlert("Incorrect password", "Passwords do not match", "Ok");
+		}
+		else
+		{
+			try
+			{
+                newUser.password = pswd.Text;
+                var stringContent = new StringContent(JsonSerializer.Serialize(newUser, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }), Encoding.UTF8, "application/json");
+                var response = await httpClient.PutAsync("Profile", stringContent);
+                if (response.IsSuccessStatusCode)
+                {
+                    await DisplayAlert("Password reset", "Passwords succesfully updated", "Ok");
+					ClearFields();
+                    Shell.Current.GoToAsync("//Login");
+                }
+            }
+            catch (Exception ex)
+			{
+                await DisplayAlert("Error", $"Error: {ex.Message}", "Ok");
+            }
+		}
     }
 }

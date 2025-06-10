@@ -8,7 +8,7 @@ public partial class LoginPage : ContentPage
 	public LoginPage()
 	{
 		InitializeComponent();
-        httpClient = new HttpClient() { BaseAddress = new Uri("http://192.168.35.111:5254/api/") };
+        httpClient = new HttpClient() { BaseAddress = new Uri("http://10.1.140.76:5254/api/") };
 	}
 
     private void OnTapGoToForgotThePasswordPage(object sender, TappedEventArgs e)
@@ -25,32 +25,38 @@ public partial class LoginPage : ContentPage
 
     private async void OnClickToProductsPage(object sender, EventArgs e)
     {
+        //Shell.Current.GoToAsync("//Products");
         ValidateUser user = new ValidateUser();
         if (!string.IsNullOrEmpty(email.Text) || !string.IsNullOrEmpty(password.Text))
         {
             user.email = email.Text;
             user.password = password.Text;
-        }
-        JsonSerializerOptions options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-        };
-        var json = JsonSerializer.Serialize(user, options);
-        try
-        {
-            var response = await httpClient.PostAsync("Login", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
-            if (response.IsSuccessStatusCode)
+
+            JsonSerializerOptions options = new JsonSerializerOptions
             {
-                Shell.Current.GoToAsync("//Products");
-            }
-            else
+                PropertyNameCaseInsensitive = true,
+            };
+            var json = JsonSerializer.Serialize(user, options);
+            try
             {
-                DisplayAlert("Invalid User", "Invalid login", "OK");
+                var response = await httpClient.PostAsync("Login", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    Shell.Current.GoToAsync("//Products");
+                }
+                else
+                {
+                    DisplayAlert("Invalid User", "Invalid login", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
             }
         }
-        catch (Exception ex)
+        else
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            DisplayAlert("Empty field", "Please enter email and password", "OK");
         }
     }
 

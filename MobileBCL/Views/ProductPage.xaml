@@ -3,10 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MobileBCL.Views.ProductPage"
              Title="ProductPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid RowDefinitions="100, *">
+        <HorizontalStackLayout BackgroundColor="#A4C2D6" Grid.Row="0">
+            <Border Stroke="Black" StrokeThickness="2" Margin="20" WidthRequest="250"> 
+                <Picker SelectedIndexChanged="OnIndexChangeToFilter" x:Name="categoryPicker" Title="Select Categories" FontSize="24" FontAttributes="Bold" TitleColor="Black" HorizontalTextAlignment="Center" BackgroundColor="White"/>
+            </Border>
+            <Border Stroke="Black" StrokeThickness="2" Margin="20,20,5,20" WidthRequest="350">
+                <Entry Keyboard="Text" x:Name="entryProduct" BackgroundColor="White" Placeholder="Pesquisar" FontSize="24" FontAttributes="Bold" ClearButtonVisibility="WhileEditing"/>
+            </Border>
+            <Button BackgroundColor="White" Clicked="OnClickToSearch" Margin="10,20" BorderColor="Black" BorderWidth="2" WidthRequest="50" ImageSource="135-search.png"/>
+        </HorizontalStackLayout>
+        <CollectionView x:Name="ProductsCollection" Margin="20" Grid.Row="1">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="10" Stroke="Black" StrokeThickness="3">
+                        <Grid ColumnDefinitions="150,*,100">
+                            <Image Grid.Column="0" Source="224-happy.png"/>
+                            <VerticalStackLayout Grid.Column="1" Spacing="20">
+                                <Label Text="{Binding product_name}"/>
+                                <Label Text="{Binding price}"/>
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout VerticalOptions="Center" Grid.Column="2" Spacing="15">
+                                <Label Text="Detail" TextColor="Blue" TextDecorations="Underline"/>
+                                <Image Source="216-star-empty.png"  WidthRequest="25">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnTapSetFavorite"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

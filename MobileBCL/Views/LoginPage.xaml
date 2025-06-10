@@ -4,7 +4,7 @@
              x:Class="MobileBCL.Views.LoginPage"
              Title="LoginPage">
     <Grid RowDefinitions="{OnIdiom Desktop='150,*', Tablet='450,*'}" BackgroundColor="#FFFFFF">
-        <Image Margin="0,50,0,0" Grid.Row="0" Source="logo.png" WidthRequest="150"/>
+        <Image Margin="0,50,0,0" Grid.Row="0" Source="logo.png" WidthRequest="{OnIdiom Desktop=150, Tablet=300}"/>
         <Border BackgroundColor="#a4c2d6" StrokeThickness="3" Stroke="Black" Margin="40,40,40,160" Grid.Row="1">
             <VerticalStackLayout Padding="50" Spacing="20">
 
